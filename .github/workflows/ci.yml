@@ -37,9 +37,8 @@ jobs:
 
             - run: yarn install --frozen-lockfile --non-interactive
 
-            - run: yarn install
             - run: yarn lint
-            - run: yarn test
+            - run: yarn test:ember
     
     ember-try:
         name: Ember try ember-${{matrix.scenario}}
@@ -73,5 +72,6 @@ jobs:
                   ${{ runner.os }}-yarn-
 
             - run: yarn install --frozen-lockfile --non-interactive
-            - name: Running test
+
+            - name: Running ember-try schenario for ${{ matrix.scenario }}
               run: yarn ember try:one ${{ matrix.scenario }}
