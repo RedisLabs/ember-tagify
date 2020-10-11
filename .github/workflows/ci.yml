@@ -51,9 +51,6 @@ jobs:
                   steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
                   steps.cache-node-modules.outputs.cache-hit != 'true'
 
-            - name: Install dependencies
-              run: yarn install --frozen-lockfile
-              
             - name: lint
               run: yarn lint
 
