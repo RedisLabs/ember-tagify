@@ -29,7 +29,7 @@
     "test:ember-compatibility": "ember try:each"
   },
   "dependencies": {
-    "@yaireo/tagify": "^3.19.7",
+    "@yaireo/tagify": "^3.20.0",
     "broccoli-funnel": "^3.0.3",
     "broccoli-merge-trees": "^4.2.0",
     "broccoli-stew": "^3.0.0",

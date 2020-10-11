@@ -1,0 +1,67 @@
+name: CI
+ 
+on: 
+    push:
+        branches:
+            - master
+    pull_request:
+ 
+jobs:
+    test:
+        name: Run tests
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest]
+                node-version: [12.x]
+        steps:
+            - name: Check out a copy of the repo
+              uses: actions/checkout@v2
+ 
+            - name: Use Node.js ${{ matrix.node-version }}
+              uses: actions/setup-node@v1
+              with:
+                node-version: ${{ matrix.node-version }}
+
+            - name: Get Yarn cache path
+                id: yarn-cache-dir-path
+                run: echo "::set-output name=dir::$(yarn cache dir)"
+
+                - name: Cache Yarn cache
+                id: cache-yarn-cache
+                uses: actions/cache@v1
+                with:
+                  path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+                  key: ${{ runner.os }}-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                    ${{ runner.os }}-${{ matrix.node-version }}-yarn-
+   
+            - name: Cache node_modules
+                id: cache-node-modules
+                uses: actions/cache@v1
+                with:
+                  path: node_modules
+                  key: ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: |
+                    ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
+
+            - name: Install dependencies
+                run: yarn install --frozen-lockfile
+                if: |
+                    steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
+                    steps.cache-node-modules.outputs.cache-hit != 'true'
+
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+
+            - name: lint:hbs
+              run: yarn lint:hbs
+ 
+            - name: lint:js
+              run: yarn lint:js
+
+            - name: lint
+              run: yarn lint
+
+            - name: Test Ember app
+              run: yarn test
