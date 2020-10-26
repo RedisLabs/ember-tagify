@@ -1,0 +1,35 @@
+{
+  "id": "rediscloud",
+  "api": {
+    "test": {
+      "sso_url": "https://app-qa.redislabs.com/sso/login",
+      "base_url": "https://app-qa.redislabs.com/heroku/resources"
+    },
+    "regions": [
+      "us",
+      "eu",
+      "frankfurt",
+      "oregon",
+      "tokyo",
+      "virginia"
+    ],
+    "password": "XmWxy91fSoXQ78MF",
+    "requires": [
+      "attachable",
+      "many_per_app"
+    ],
+    "sso_salt": "rIB5uTJNsOcD2SbJ",
+    "production": {
+      "sso_url": "https://app.redislabs.com/sso/login",
+      "base_url": "https://app.redislabs.com/heroku/resources"
+    },
+    "config_vars": [
+      "REDISCLOUD_URL"
+    ]
+  },
+  "$base": 147238398149400,
+  "api_url": {
+    "sso_url": "https://app.redislabs.com/sso/login",
+    "base_url": "https://app.redislabs.com/heroku/resources"
+  }
+}
